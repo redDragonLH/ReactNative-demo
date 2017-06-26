@@ -15,11 +15,8 @@ import { StackNavigator } from 'react-navigation';
 import Header from './src/header/header';
 import List from './src/list/list';
 import ImportantNews from './src/importantNews/importantNews';
-import NList from './src/nvlist/nvlist.js';
-class Homes extends React.Component {
-  static navigationOptions = {
-  title: '網易',
-};
+// import NList from './src/nvlist/nvlist.js';
+class myapp extends React.Component {
   render() {
     return (
       <View style={styles.flex}>
@@ -33,7 +30,6 @@ class Homes extends React.Component {
           '3、好奇宝宝好奇宝宝好奇宝宝好奇宝宝好奇宝宝',
           '4、人民邮电人民邮电人民邮电人民邮电'
         ]}></ImportantNews>
-        <NList></NList>
       </View>
     );
   }
@@ -42,9 +38,6 @@ var styles = StyleSheet.create({
     flex: {
         flex:1,
     },
-});
-const myapp = StackNavigator({
-  Home: { screen: Homes },
 });
 
 AppRegistry.registerComponent('myapp', () => myapp);

@@ -1,5 +1,5 @@
 // 废弃
-import React from 'react';
+import React, { Component } from 'react';
 import  {
   StyleSheet,
   Navigator,
@@ -9,7 +9,7 @@ import  {
   ScrollView,
 } from 'react-native'
 
-var NList = React.createClass({
+var NavigatorChildPage  = React.createClass({
   render: function(){
     return (
       <ScrollView style={styles.flex}>
@@ -45,30 +45,56 @@ var Detail = React.createClass({
   }
 });
 
-var NV = React.createClass({
-  render: function(){
-    return(
+
+var iNavigator;
+
+export default class NavigatorDemo extends Component {
+  configureScenceAndroid() {
+    return Navigator.SceneConfigs.FadeAndroid;
+  }
+
+  renderSceneAndroid(route, navigator) {
+    iNavigator = navigator;
+    switch (route.id) {
+      case 'Main':
+        return (
+          <View style={styles.container}>
+            <TouchableOpacity onPress={ () => iNavigator.push({title:'NavigatorChildPage',id:'NavigatorChildPage'}) }>
+              <Text style={styles.welcome}>Click Go To NavigatorChildPage Page</Text>
+            </TouchableOpacity>
+          </View>
+        )
+        break;
+      case 'NavigatorChildPage':
+        return (<NavigatorChildPage navigator={navigator} route={route}/>);
+        break;
+    }
+  }
+
+  render() {
+    var renderScene = this.renderSceneAndroid;
+    var configureScence = this.configureScenceAndroid;
+    return (
       <Navigator
-        style={{flex:1}}
-        initialRoute={{
-          component: List,
-          title: '邮轮',
-          passProps: {},
-        }}
-      />
+        debugOverlay={false}
+        initialRoute={{ title: 'Main', id:'Main'}}
+        configureScence={{configureScence}}
+        renderScene={renderScene}/>
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
-  flex:{
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-  list_item:{
-    lineHeight:25,
-    fontSize:16,
-    marginLeft:10,
-    marginRight:10
-  }
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
 });
-module.exports = NList;
